@@ -6,6 +6,8 @@ import com.winter.app.commons.Pager;
 
 public interface BoardDAO {
 	
+	public Long getTotal(Pager pager)throws Exception;
+	
 	public int setDelete(BoardVO boardVO)throws Exception;
 	
 	public int setHitUpdate(BoardVO boardVO)throws Exception;

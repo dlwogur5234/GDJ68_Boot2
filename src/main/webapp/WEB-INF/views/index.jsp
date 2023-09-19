@@ -34,6 +34,6 @@
     	
     </div>
     
-<c:import url="./layout/footJs.jsp"></c:import>
+<c:import url="./layout/footjs.jsp"></c:import>
 </body>
 </html>

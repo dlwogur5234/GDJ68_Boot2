@@ -8,5 +8,6 @@
 		<typeAlias type="com.winter.app.board.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.winter.app.board.notice.NoticeVO" alias="NoticeVO"/>
 		<typeAlias type="com.winter.app.commons.Pager" alias="Pager"/>
+		<typeAlias type="org.apache.ibatis.session.SqlSessionFactory" alias="sqlSessionFactory"/>
 	</typeAliases>
 </configuration>
