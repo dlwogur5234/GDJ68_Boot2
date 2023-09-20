@@ -51,7 +51,7 @@
 	</select>
 	
 	<!-- Add -->
-	<insert id="add" parameterType="BoardVO">
+	<insert id="add" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="boardNo">
 		INSERT INTO NOTICE
 		VALUES (NULL, #{boardTitle}, #{boardWriter}, #{boardContents}, now(), 0)
 	</insert>

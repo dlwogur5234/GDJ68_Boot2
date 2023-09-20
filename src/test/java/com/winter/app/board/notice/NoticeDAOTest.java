@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardVO;
 import com.winter.app.commons.Pager;
@@ -18,13 +19,13 @@ class NoticeDAOTest {
 	private NoticeDAO noticeDAO;
 	
 	@Test
-	void addTest()throws Exception{
+	void addTest(MultipartFile [] files)throws Exception{
 		for(int i=0; i<150; i++) {
 			BoardVO boardVO = new BoardVO();
 			boardVO.setBoardTitle("title"+i);
 			boardVO.setBoardWriter("writer"+i);
 			boardVO.setBoardContents("contents"+i);
-			int result = noticeDAO.add(boardVO);
+			int result = noticeDAO.add(boardVO, files);
 			
 			if(i%10 == 0) {
 				Thread.sleep(500);				
