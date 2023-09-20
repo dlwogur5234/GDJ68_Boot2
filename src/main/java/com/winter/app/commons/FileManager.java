@@ -10,9 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileManager {
 	
+	
 	//file 저장 후 파일명 리턴
 	public String save(String path, MultipartFile multipartFile)throws Exception{
-		//어디에? 어떤 파일을?
+		//어디에?, 어떤파일을?
 		//1. 파일 객체 생성
 		File file = new File(path);
 		
@@ -24,12 +25,14 @@ public class FileManager {
 		String fileName = UUID.randomUUID().toString()+"_"+multipartFile.getOriginalFilename();
 		
 		//3. 파일을 저장
-		file = new File(path, fileName);
-		//첫번째 방법 FileCopyUtils.copy
-//		FileCopyUtils.copy(multipartFile.getBytes(), file);
-		//두번째 방법transferTo
+		file = new File(file, fileName);
+		//FileCopyUtils.copy
+		//FileCopyUtils.copy(multipartFile.getBytes(), file);
+		//transferTo
 		multipartFile.transferTo(file);
 		
 		return fileName;
 	}
+	
+
 }

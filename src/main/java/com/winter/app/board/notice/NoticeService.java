@@ -5,61 +5,73 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardService;
 import com.winter.app.board.BoardVO;
+import com.winter.app.board.FileVO;
 import com.winter.app.commons.FileManager;
 import com.winter.app.commons.Pager;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j //log기록을 찍고 싶을때 사용하는 어노테이션
-public class NoticeService implements BoardService{
+@Slf4j
+@Transactional(rollbackFor = Exception.class)
+public class NoticeService implements BoardService {
 	
 	@Autowired
 	private NoticeDAO noticeDAO;
 	@Autowired
 	private FileManager fileManager;
-	//spEl 스프링에서 사용하는 이엘
-	//properties 값을 java에서 사용 하고 싶을때
+	
+	//spEl
+	//properties 값을 java 사용
 	//@Value("${properties의 키}")
 	@Value("${app.upload}")
 	private String uploadPath;
+	
 	@Value("${app.board.notice}")
 	private String boardName;
 
+
 	@Override
 	public List<BoardVO> getList(Pager pager) throws Exception {
-		pager.makeRowNum();
-		pager.makePageNum(noticeDAO.getTotal(pager));
+		// TODO Auto-generated method stub
 		return noticeDAO.getList(pager);
 	}
 
 	@Override
-	public int add(BoardVO boardVO, MultipartFile [] files) throws Exception {
-		// TODO Auto-generated method stub
-		log.info("---------------------------------------------------");
-		log.info("uploadPath: {}", uploadPath);
-		log.info("---------------------------------------------------");
-
-		int result=noticeDAO.add(boardVO, files);
+	public int add(BoardVO boardVO, MultipartFile[] files) throws Exception {
 		
+		log.info("BoardNo : {}", boardVO.getBoardNo());
+		int result= noticeDAO.add(boardVO);
+		log.info("=====================");
+		log.info("BoardNo : {}", boardVO.getBoardNo());
 		
 		
 		for(MultipartFile multipartFile:files) {
-			String fileName = fileManager.save(this.uploadPath+this.boardName, multipartFile);
-					
+			
+			if(multipartFile.isEmpty()) {
+				continue;
+			}
+			
+			NoticeFileVO fileVO = new NoticeFileVO();
+			String fileName=fileManager.save(this.uploadPath+this.boardName, multipartFile);
+			fileVO.setBoardNo(boardVO.getBoardNo());
+			fileVO.setFileName(fileName);
+			fileVO.setOriName(multipartFile.getOriginalFilename());
+			result = noticeDAO.fileAdd(fileVO);
 		}
-		return 0;//noticeDAO.add(boardVO, files);
+		
+		return result;//;
 	}
 
 	@Override
-	public int setDelete(BoardVO boardVO) throws Exception {
+	public BoardVO getDetail(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
-		return noticeDAO.setDelete(boardVO);
-				
+		return noticeDAO.getDetail(boardVO);
 	}
 
 	@Override
@@ -69,10 +81,15 @@ public class NoticeService implements BoardService{
 	}
 
 	@Override
-	public BoardVO getDetail(BoardVO boardVO) throws Exception {
+	public int setDelete(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
-		return noticeDAO.getDetail(boardVO);
+		return noticeDAO.setDelete(boardVO);
 	}
-
+	
+	@Override
+	public FileVO getFileDetail(FileVO fileVO) throws Exception {
+		// TODO Auto-generated method stub
+		return noticeDAO.getFileDetail(fileVO);
+	}
 
 }
