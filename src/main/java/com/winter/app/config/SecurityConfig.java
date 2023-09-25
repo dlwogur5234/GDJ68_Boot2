@@ -49,6 +49,13 @@ public class SecurityConfig {
 				.defaultSuccessUrl("/")
 				.failureUrl("/member.login")
 				.permitAll()
+				.and()
+			.logout()
+				.logoutUrl("/member/logout")
+				.logoutSuccessUrl("/")
+				.invalidateHttpSession(true)
+				.and()
+			.sessionManagement()
 			;
 		
 		return httpSecurity.build();
