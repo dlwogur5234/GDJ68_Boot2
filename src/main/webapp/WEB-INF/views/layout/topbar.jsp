@@ -30,13 +30,13 @@
                     		 <li class="nav-item">
                     		 	<a class="nav-link " href="/member/join" id="join" role="button"
                                 aria-expanded="false">
-                                	<i class="fas fa-search fa-fw"></i>
+                                	<i class="fas fa-address-book"></i>
                                 </a>
                     		 </li>
                     		 <li class="nav-item">
                     		 	<a class="nav-link " href="member/login" id="login" role="button"
                                 aria-expanded="false">
-                                	<i class="fas fa-search fa-fw"></i>
+                                	<i class="fas fa-user-lock"></i>
                                 </a>
                     		 </li>
                     	</ul>
