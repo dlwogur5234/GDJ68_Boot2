@@ -1,15 +1,37 @@
 package com.winter.app.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
-public class MemberService {
+@Slf4j
+public class MemberService implements UserDetailsService{
 
 	//DAO
 	@Autowired
 	private MemberDAO memberDAO;
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		log.info("=============로그인시도중============");
+		MemberVO memberVO = new MemberVO();
+		memberVO.setUsername(username);
+		try {
+			memberVO = memberDAO.getMember(memberVO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			memberVO = null;
+		}
+		return memberVO;
+	}
 	
 	//login
 	public MemberVO getLogin(MemberVO memberVO)throws Exception{
@@ -22,7 +44,6 @@ public class MemberService {
 		if(loginVO.getPassword().equals(memberVO.getPassword())) {
 			return loginVO;
 		}
-		
 		
 		return null;
 	}
@@ -47,4 +68,14 @@ public class MemberService {
 		
 		return check;
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

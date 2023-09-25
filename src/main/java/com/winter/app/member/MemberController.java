@@ -59,18 +59,15 @@ public class MemberController {
 		
 	}
 	
-	@PostMapping("login")
-	public String getLogin2(MemberVO memberVO, HttpSession session)throws Exception{
-		memberVO= memberService.getLogin(memberVO);
-		
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-			return "redirect:../";
-		}
-		
-		return "redirect:./login";
-		
-	}
+	/*
+	 * @PostMapping("login") public String getLogin2(MemberVO memberVO, HttpSession
+	 * session)throws Exception{ memberVO= memberService.getLogin(memberVO);
+	 * 
+	 * if(memberVO != null) { session.setAttribute("member", memberVO); return
+	 * "redirect:../"; }
+	 * 
+	 * return "redirect:./login"; }
+	 */
 
 //	@GetMapping("join")
 //  public void setJoin(Model model) throws Exception{

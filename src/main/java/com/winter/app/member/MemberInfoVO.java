@@ -19,5 +19,5 @@ public class MemberInfoVO {
 	private String email;
 	@Past
 	private Date birth;
-	private Date joindate;
+	private Date joinDate;
 }
