@@ -30,10 +30,12 @@ public class SecurityFailHandler implements AuthenticationFailureHandler{
 		log.info("================= Exception : {}", exception);
 		String message = "아이디 혹은 비밀번호가 틀렸습니다";
 		if(exception instanceof InternalAuthenticationServiceException) {
-			message = "존재하지 않는 ID입니다";
+			//message = "존재하지 않는 ID입니다";
+			message= "login.fail.nouser";
 		}
 		if(exception instanceof BadCredentialsException) {
-			message = "비밀번호가 틀렸습니다";
+			//message = "비밀번호가 틀렸습니다";
+			message = "login.fail.notpassword";
 		}
 		if(exception instanceof AccountExpiredException) {
 //			isAccountNonExpired() = false
