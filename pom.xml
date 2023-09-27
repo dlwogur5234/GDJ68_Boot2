@@ -29,7 +29,11 @@
 		    <artifactId>spring-boot-starter-aop</artifactId>
 				<!-- 버전 생략 -->
 		</dependency>
-		
+		<!-- Oauth2 socialLogin -->
+		<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>

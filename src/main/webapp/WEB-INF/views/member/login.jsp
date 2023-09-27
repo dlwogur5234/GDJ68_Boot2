@@ -48,7 +48,7 @@
 					  
 					  
 					  <button type="submit" class="btn btn-primary">Submit</button>
-					  
+					  <a href="/oauth2/authorization/kakao">KakaoLogin</a>
 	                </form:form>
 					  
 					 

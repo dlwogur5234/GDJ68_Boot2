@@ -69,7 +69,11 @@ public class SecurityConfig {
 				.userDetailsService(memberService)
 				.authenticationSuccessHandler(successHandler)
 				.and()
-			.sessionManagement()
+			.oauth2Login()
+			   	.userInfoEndpoint()
+			   	.userService(memberService)
+			   	.and()
+			
 			;
 		
 		return httpSecurity.build();
