@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,12 +25,14 @@
 	    		<!-- Begin Page Content -->
 	            <div class="container-fluid">
 	                <!-- page 내용 -->
-	                <sec:authentication property="principal" var="user"></sec:authentication>
+	                
+	                
+	                 <sec:authentication property="principal" var="user"></sec:authentication>
 	                	<div> ID : ${user.username}</div>
-	                	<div> 이름 : ${user.name}</div>
+	                	<div> 이름 : <sec:authentication property="principal.name"/> </div>
 	                	<div> 이메일 : ${user.email}</div>
 	                	<div> 생일 : ${user.birth}</div>
-	                
+	               
 	    		</div>
                 
             </div>

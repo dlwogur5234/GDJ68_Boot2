@@ -1,11 +1,13 @@
 package com.winter.app.member;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,24 +35,31 @@ public class MemberController {
 	
 	@GetMapping("info")
 	public void getInfo() throws Exception{
-		
+		//DB에서 사용자 정보를 조회해서 jsp로 보냄
 	}
 	
 	@GetMapping("update")
-	private void setUpdate(HttpSession session, Model model) throws Exception {
-		MemberVO memberVO =(MemberVO)session.getAttribute("member");
-		memberVO = memberService.getLogin(memberVO);
+	private void setUpdate(@AuthenticationPrincipal MemberVO memberVO, Model model) throws Exception {
+//		MemberVO memberVO =(MemberVO)principal;
+//		memberVO = memberService.getLogin(memberVO);
 		
-		MemberInfoVO memberInfoVO = new MemberInfoVO();
-		memberInfoVO.setName(memberVO.getName());
-		memberInfoVO.setBirth(memberVO.getBirth());
-		memberInfoVO.setEmail(memberVO.getEmail());
+		
+		  MemberInfoVO memberInfoVO = new MemberInfoVO();
+		  memberInfoVO.setName(memberVO.getName());
+		  memberInfoVO.setBirth(memberVO.getBirth());
+		  memberInfoVO.setEmail(memberVO.getEmail());
+		 
 		
 		model.addAttribute("memberInfoVO", memberInfoVO);
 	}
 	
 	@PostMapping("update")
-	public void setUpdate(@Valid MemberInfoVO memberInfoVO, BindingResult bindingResult)throws Exception{
+	public String setUpdate(@Valid MemberInfoVO memberInfoVO, BindingResult bindingResult)throws Exception{
+		Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		MemberVO memberVO = (MemberVO)obj;
+		memberVO.setEmail("UpdateEmail@naver.com");
+		
+		return "redirect:/";
 		
 	}
 	

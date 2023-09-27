@@ -41,6 +41,11 @@
 					    <form:errors path="password"></form:errors>
 					  </div>
 					  
+					  <div class="form-group">
+					  	<label for="remember">RememberMe</label>
+					  	<input type="checkbox" name="remember-me" class="form-control">
+					  </div>
+					  
 					  
 					  <button type="submit" class="btn btn-primary">Submit</button>
 					  
@@ -66,8 +71,10 @@
 
 	let message = '${msg}'
 	if(message != ''){
-		alert('${msg}');
+		alert(message);
 	}
+	//url 제거
+	history.replaceState({}, null, location.pathname);
 </script>
 </body>
 </html>

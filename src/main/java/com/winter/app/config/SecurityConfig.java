@@ -10,16 +10,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.winter.app.member.MemberService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 	@Autowired
 	private SecuritySuccessHandler successHandler;
+	@Autowired
+	private MemberService memberService;
 	
-	@Bean
-	PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder(); //password를 암호화하는 Encoder
-	}
+	
 
 	@Bean
 	WebSecurityCustomizer webSecurityConfig() {
@@ -61,6 +62,12 @@ public class SecurityConfig {
 				.addLogoutHandler(getLogoutAdd())
 				.logoutSuccessHandler(getLogOutHandler())
 				.invalidateHttpSession(true)
+				.and()
+			.rememberMe() //id기억하기
+				.tokenValiditySeconds(60)
+				.key("IdRemember")
+				.userDetailsService(memberService)
+				.authenticationSuccessHandler(successHandler)
 				.and()
 			.sessionManagement()
 			;
